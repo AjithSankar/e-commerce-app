@@ -9,6 +9,8 @@ import dev.ak.ecommerce.kafka.OrderConfirmation;
 import dev.ak.ecommerce.kafka.OrderProducer;
 import dev.ak.ecommerce.orderline.OrderLineRequest;
 import dev.ak.ecommerce.orderline.OrderLineService;
+import dev.ak.ecommerce.payment.PaymentClient;
+import dev.ak.ecommerce.payment.PaymentRequest;
 import dev.ak.ecommerce.product.ProductClient;
 import dev.ak.ecommerce.product.PurchaseRequest;
 import dev.ak.ecommerce.repository.OrderRepository;
@@ -30,6 +32,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
     public Integer createOrder(OrderRequest orderRequest) {
         // check customer
@@ -47,6 +50,14 @@ public class OrderService {
         }
 
         // todo: start payment process
+        var paymentRequest = new PaymentRequest(
+                orderRequest.amount(),
+                orderRequest.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         //send the order confirmation -> notification-ms(kafka)
         orderProducer.sendOrderConfirmation(
