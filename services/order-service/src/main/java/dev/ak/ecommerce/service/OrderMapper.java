@@ -2,6 +2,7 @@ package dev.ak.ecommerce.service;
 
 import dev.ak.ecommerce.entity.Order;
 import dev.ak.ecommerce.entity.OrderRequest;
+import dev.ak.ecommerce.entity.OrderResponse;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,5 +20,11 @@ public class OrderMapper {
                 .reference(orderRequest.reference())
                 .paymentMethod(orderRequest.paymentMethod())
                 .build();
+    }
+
+    public OrderResponse fromOrder(Order order) {
+        return new OrderResponse(
+                order.getId(), order.getReference(), order.getTotalAmount(), order.getPaymentMethod(), order.getCustomerId()
+        );
     }
 }
