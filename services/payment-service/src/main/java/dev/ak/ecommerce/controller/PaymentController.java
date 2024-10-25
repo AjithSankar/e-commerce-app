@@ -1,5 +1,7 @@
-package dev.ak.ecommerce.payment;
+package dev.ak.ecommerce.controller;
 
+import dev.ak.ecommerce.payment.PaymentRequest;
+import dev.ak.ecommerce.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
