@@ -1,6 +1,7 @@
 package dev.ak.ecommerce.email;
 
 import dev.ak.ecommerce.kafka.order.Product;
+import dev.ak.ecommerce.kafka.order.PurchaseResponse;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class EmailService {
             String customerName,
             BigDecimal amount,
             String orderReference,
-            List<Product> products
+            List<PurchaseResponse> products
     ) throws MessagingException {
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();

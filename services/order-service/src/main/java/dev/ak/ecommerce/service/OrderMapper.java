@@ -18,6 +18,7 @@ public class OrderMapper {
                 .id(orderRequest.id())
                 .customerId(orderRequest.customerId())
                 .reference(orderRequest.reference())
+                .totalAmount(orderRequest.amount())
                 .paymentMethod(orderRequest.paymentMethod())
                 .build();
     }

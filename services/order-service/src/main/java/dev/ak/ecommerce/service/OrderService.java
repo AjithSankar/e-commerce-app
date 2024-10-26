@@ -16,6 +16,7 @@ import dev.ak.ecommerce.product.PurchaseRequest;
 import dev.ak.ecommerce.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import static java.lang.String.format;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final CustomerClient customerClient;
@@ -46,6 +48,7 @@ public class OrderService {
 
         //persist order lines
         for (PurchaseRequest purchaseRequest : orderRequest.products()) {
+            log.info("Saving order line with productId:: {}", purchaseRequest.productId());
             orderLineService.saveOrderLine(new OrderLineRequest(null, order.getId(), purchaseRequest.productId(), purchaseRequest.quantity()));
         }
 
